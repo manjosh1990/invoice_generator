@@ -85,15 +85,15 @@ const InvoiceForm = () => {
                 <div className="mb-4">
                     <div className="row g-3">
                         <div className="col-md-4">
-                            <lable className="form-label" htmlFor="invoiceNumber">Invoice Number</lable>
+                            <label className="form-label" htmlFor="invoiceNumber">Invoice Number</label>
                             <input type="text" id="invoiceNumber" disabled className="form-control" placeholder="Invoice Number"/>
                         </div>
                         <div className="col-md-4">
-                            <lable className="form-label" htmlFor="invoiceDate">Invoice Date</lable>
+                            <label className="form-label" htmlFor="invoiceDate">Invoice Date</label>
                             <input id="invoiceDate" type="date" className="form-control"/>
                         </div>
                         <div className="col-md-4">
-                            <lable className="form-label" htmlFor="dueDate">Due Date</lable>
+                            <label className="form-label" htmlFor="dueDate">Due Date</label>
                             <input id ="dueDate" type="date" className="form-control"/>
                         </div>
                     </div>
