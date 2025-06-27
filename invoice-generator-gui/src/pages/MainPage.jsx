@@ -8,11 +8,25 @@ const MainPage = () => {
     // This is the main page of the application
     // It contains the title bar, invoice form, and template grid
     const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const {invoiceTitle, setInvoiceTitle} = useContext(AppContext);
+    const {
+        invoiceTitle,
+        setInvoiceTitle,
+        setInvoiceData,
+        setSelectedTemplate,
+    } = useContext(AppContext);
 
     const handleTitleChange = (e) => {
         const newTitle = e.target.value;
         setInvoiceTitle(newTitle);
+        setInvoiceData((prevData) => ({
+            ...prevData,
+            title: newTitle
+        }));
+    }
+
+    const handleTemplateClick = (templateId) => {
+        setSelectedTemplate(templateId);
+        console.log(templateId);
     }
 
     const handleTitleEdit = () => {
@@ -60,7 +74,7 @@ const MainPage = () => {
                     {/*template grid*/}
                     <div className="col-12 col-lg-6 d-flex">
                         <div className="bg-white border rounded shadow-sm p-4 w-100">
-                            <TemplateGrid/>
+                            <TemplateGrid onTemplateClick={handleTemplateClick}/>
                         </div>
                     </div>
                 </div>
