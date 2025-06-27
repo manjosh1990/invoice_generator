@@ -23,3 +23,13 @@
 .invoiceform textarea:focus {
   box-shadow: none !important;
 }
+
+.previewpage .invoice-preview {
+  width: 794px;
+  min-height: 1123px;
+  background: #fff;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

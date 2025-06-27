@@ -4,11 +4,13 @@ import {AppContext} from "../context/AppContext.jsx";
 import InvoiceForm from "../components/InvoiceForm.jsx";
 import TemplateGrid from "../components/TemplateGrid.jsx";
 import toast from "react-hot-toast";
+import {useNavigate} from "react-router-dom";
 
 const MainPage = () => {
     // This is the main page of the application
     // It contains the title bar, invoice form, and template grid
     const [isEditingTitle, setIsEditingTitle] = useState(false);
+   const navigate = useNavigate();
     const {
         invoiceTitle,
         setInvoiceTitle,
@@ -35,6 +37,7 @@ const MainPage = () => {
             toast.error("Please fill in all the fields in the invoice before selecting a template.");
         }
         setSelectedTemplate(templateId);
+        navigate('/preview');
     }
 
     const handleTitleEdit = () => {
