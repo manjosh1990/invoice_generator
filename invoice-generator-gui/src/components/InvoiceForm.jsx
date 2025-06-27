@@ -1,11 +1,12 @@
 import {assets} from "../assets/assets.js";
 import {Trash2} from "lucide-react";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AppContext} from "../context/AppContext.jsx";
 
 const InvoiceForm = () => {
 
     const {invoiceData, setInvoiceData} = useContext(AppContext);
+    const [isSameAsBilling, setIsSameAsBilling] = useState(false);
 
     const addItem = () => {
         setInvoiceData(prevData => ({
@@ -30,11 +31,9 @@ const InvoiceForm = () => {
         }))
     }
 
-    const handleSameAddress = () => {
-        console.log('same address')
-        console.log(invoiceData)
-        console.log('billing data')
-        console.log(invoiceData.billing)
+    const handleSameAddress = (e) => {
+        const checked = e.target.checked;
+        setIsSameAsBilling(checked);
         setInvoiceData(prevData => ({
             ...prevData, shipping: {
                 ...prevData.billing
@@ -175,7 +174,7 @@ const InvoiceForm = () => {
                     <h5>Ship To</h5>
                     <div className="form-check">
                         <input type="checkbox" id="sameAddress" className="form-check-input"
-                               onChange={handleSameAddress}
+                               onChange={(e) => handleSameAddress(e)}
                         />
                         <label className="form-check-label" htmlFor="sameAddress">
                             Same as Bill To
@@ -189,6 +188,7 @@ const InvoiceForm = () => {
                                placeholder="Recipient Name"
                                onChange={(e) => handleChange('shipping', 'name', e.target.value)}
                                value={invoiceData.shipping.name}
+                               disabled={isSameAsBilling}
                         />
                     </div>
                     <div className="col-md-6">
@@ -197,6 +197,7 @@ const InvoiceForm = () => {
                                placeholder="Recipient Phone"
                                onChange={(e) => handleChange('shipping', 'phone', e.target.value)}
                                value={invoiceData.shipping.phone}
+                               disabled={isSameAsBilling}
                         />
                     </div>
                     <div className="col-md-12">
@@ -204,6 +205,7 @@ const InvoiceForm = () => {
                                   placeholder="Recipient Address"
                                   onChange={(e) => handleChange('shipping', 'address', e.target.value)}
                                   value={invoiceData.shipping.address}
+                                  disabled={isSameAsBilling}
                         />
                     </div>
                 </div>
