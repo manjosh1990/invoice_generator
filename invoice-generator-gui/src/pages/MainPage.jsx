@@ -3,6 +3,7 @@ import {Pencil} from "lucide-react";
 import {AppContext} from "../context/AppContext.jsx";
 import InvoiceForm from "../components/InvoiceForm.jsx";
 import TemplateGrid from "../components/TemplateGrid.jsx";
+import toast from "react-hot-toast";
 
 const MainPage = () => {
     // This is the main page of the application
@@ -11,6 +12,7 @@ const MainPage = () => {
     const {
         invoiceTitle,
         setInvoiceTitle,
+        invoiceData,
         setInvoiceData,
         setSelectedTemplate,
     } = useContext(AppContext);
@@ -25,8 +27,14 @@ const MainPage = () => {
     }
 
     const handleTemplateClick = (templateId) => {
+    // This function is called when a template is clicked in the TemplateGrid
+        const hasInvalidItems = invoiceData.items.some((item) => {
+            return !item.description || !item.quantity || !item.price;
+        })
+        if( hasInvalidItems ) {
+            toast.error("Please fill in all the fields in the invoice before selecting a template.");
+        }
         setSelectedTemplate(templateId);
-        console.log(templateId);
     }
 
     const handleTitleEdit = () => {
