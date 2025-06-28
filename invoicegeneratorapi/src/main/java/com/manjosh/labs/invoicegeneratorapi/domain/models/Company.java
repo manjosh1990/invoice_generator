@@ -1,4 +1,4 @@
-package com.manjosh.labs.invoicegeneratorapi.entity.domain;
+package com.manjosh.labs.invoicegeneratorapi.domain.models;
 
 import lombok.Data;
 

@@ -1,11 +1,14 @@
-package com.manjosh.labs.invoicegeneratorapi.entity;
+package com.manjosh.labs.invoicegeneratorapi.domain.entity;
 
-import com.manjosh.labs.invoicegeneratorapi.entity.domain.Billing;
-import com.manjosh.labs.invoicegeneratorapi.entity.domain.Company;
-import com.manjosh.labs.invoicegeneratorapi.entity.domain.InvoiceDetails;
-import com.manjosh.labs.invoicegeneratorapi.entity.domain.Item;
-import com.manjosh.labs.invoicegeneratorapi.entity.domain.Shipping;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.Billing;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.Company;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.InvoiceDetails;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.Item;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.Shipping;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,12 +18,13 @@ import java.time.Instant;
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "invoices")
-public class Invoice {
-
+public class InvoiceEntity {
     @Id
     private String id;
-
     private Company company;
     private Billing billing;
     private Shipping shipping;

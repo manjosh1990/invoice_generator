@@ -1,9 +1,9 @@
-package com.manjosh.labs.invoicegeneratorapi.entity.domain;
+package com.manjosh.labs.invoicegeneratorapi.domain.models;
 
 import lombok.Data;
 
 @Data
-public class Billing {
+public class Shipping {
     private String name;
     private String phone;
     private String address;

@@ -1,7 +1,7 @@
-package com.manjosh.labs.invoicegeneratorapi.controller;
+package com.manjosh.labs.invoicegeneratorapi.web.controllers;
 
-import com.manjosh.labs.invoicegeneratorapi.entity.Invoice;
-import com.manjosh.labs.invoicegeneratorapi.service.InvoiceService;
+import com.manjosh.labs.invoicegeneratorapi.domain.models.Invoice;
+import com.manjosh.labs.invoicegeneratorapi.domain.InvoiceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
