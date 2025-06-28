@@ -28,9 +28,10 @@ const MenuBar = () => {
                             <Link className="nav-link fw-medium" to="/dashboard">Dashboard</Link>
                        </li>
                        <li className="nav-item">
-                           <button className="nav-link fw-medium">
-                               Generate
-                           </button>
+                           {/*<button className="nav-link fw-medium">*/}
+                           {/*    Generate*/}
+                           {/*</button>*/}
+                           <Link className="nav-link fw-medium" to="/generate">Generate</Link>
                        </li>
                        <li className="nav-item">
                            <button className="btn btn-primary rounded-pill px-4" style={{ backgroundColor: '#2c0b63', borderColor: '#8555d4' }}>

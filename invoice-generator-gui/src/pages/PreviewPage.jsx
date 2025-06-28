@@ -6,6 +6,7 @@ import InvoicePreview from "../components/InvoicePreview.jsx";
 const PreviewPage = () => {
     const {
         selectedTemplate,
+        setSelectedTemplate,
         invoiceData
     } = useContext(AppContext);
     const previewRef = useRef();
@@ -29,6 +30,7 @@ const PreviewPage = () => {
                                 borderWidth: '2px',          // Visible border thickness
                                 borderStyle: 'solid',
                             }}
+                            onClick={() => setSelectedTemplate(id)}
                         >
                             {label}
                         </button>
