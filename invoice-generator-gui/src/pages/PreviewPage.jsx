@@ -1,17 +1,49 @@
-import {useContext, useRef} from "react";
+import {useContext, useRef, useState} from "react";
 import {templates} from "../assets/assets.js";
 import {AppContext} from "../context/AppContext.jsx";
 import InvoicePreview from "../components/InvoicePreview.jsx";
 import {useNavigate} from "react-router-dom";
+import {saveInvoice} from "../service/invoiceService.js";
+import toast from "react-hot-toast";
+import {Loader2} from "lucide-react";
 
 const PreviewPage = () => {
     const {
         selectedTemplate,
         setSelectedTemplate,
-        invoiceData
+        invoiceData,
+        baseUrl
     } = useContext(AppContext);
     const previewRef = useRef();
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+
+    const handleSave = async () => {
+
+        try {
+            setLoading(true);
+            //TODO create thumbnail url
+            const payLoad = {
+                ...invoiceData,
+                template: selectedTemplate,
+            }
+            const response =await saveInvoice(baseUrl, payLoad);
+            if (response.status === 200) {
+                toast.success("Invoice saved successfully.");
+                navigate("/dashboard");
+            } else {
+                console.log(response.status);
+                console.log(response.data);
+                toast.error("Something went wrong while saving the invoice.");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to save invoice.",error.message);
+        }finally {
+            setLoading(false);
+        }
+    }
     return (
         <div className="previewpage container-fluid d-flex flex-column p-3 min-vh-100">
             {/*Action buttons*/}
@@ -46,11 +78,17 @@ const PreviewPage = () => {
                     >
                         Back
                     </button>
-                    <button className="btn btn-primary d-flex align-items-center justify-content-center">Save and Exit</button>
+                    <button className="btn btn-primary d-flex align-items-center justify-content-center"
+                    onClick={()=> handleSave()}
+                            disabled={loading}
+                    >   {loading && <Loader2 className="me-2 spin-animation" size={18}/> }
+                        {loading?"Saving...": "Save and Exit"}
+                    </button>
                     <button className="btn btn-danger">Delete Invoice</button>
                     <button className="btn btn-secondary">Back to Dashboard</button>
                     <button className="btn btn-info">Send email</button>
-                    <button className="btn btn-success d-flex align-items-center justify-content-center">Download PDF</button>
+                    <button className="btn btn-success d-flex align-items-center justify-content-center">Download PDF
+                    </button>
                 </div>
             </div>
             {/*Display the invoice preview here*/}

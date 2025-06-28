@@ -41,7 +41,7 @@ export const AppContextProvider = ({children}) => {
     const [invoiceTitle, setInvoiceTitle] = useState("New Invoice");
     const [invoiceData, setInvoiceData] = useState(initialInvoiceData);
     const [selectedTemplate, setSelectedTemplate] = useState("template1");
-
+    const baseUrl = "http://localhost:8080/api";
     const contextValue = {
         invoiceTitle,
         setInvoiceTitle,
@@ -49,7 +49,8 @@ export const AppContextProvider = ({children}) => {
         setInvoiceData,
         selectedTemplate,
         setSelectedTemplate,
-        initialInvoiceData
+        initialInvoiceData,
+        baseUrl
     };
 
     return (
