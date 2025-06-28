@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {saveInvoice} from "../service/invoiceService.js";
 import toast from "react-hot-toast";
 import {Loader2} from "lucide-react";
+import html2canvas from "html2canvas";
+import {uploadInvoiceThumbnail} from "../service/cloudnariService.js";
 
 const PreviewPage = () => {
     const {
@@ -23,9 +25,18 @@ const PreviewPage = () => {
 
         try {
             setLoading(true);
-            //TODO create thumbnail url
+            const canvas = await html2canvas(previewRef.current, {
+                scale: 2, // Increase scale for better quality
+                useCORS: true, // Enable CORS to load external images
+                backgroundColor:"#fff", // Set background color to white
+                scrollY: -window.scrollY, // Adjust for any scrolling
+            })
+            const imageData = canvas.toDataURL("image/png");
+           const thumbnailUrl = await  uploadInvoiceThumbnail(imageData)
+
             const payLoad = {
                 ...invoiceData,
+                thumbnailUrl, // Add the uploaded thumbnail URL
                 template: selectedTemplate,
             }
             const response =await saveInvoice(baseUrl, payLoad);
