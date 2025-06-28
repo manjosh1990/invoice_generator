@@ -2,6 +2,7 @@ import {useContext, useRef} from "react";
 import {templates} from "../assets/assets.js";
 import {AppContext} from "../context/AppContext.jsx";
 import InvoicePreview from "../components/InvoicePreview.jsx";
+import {useNavigate} from "react-router-dom";
 
 const PreviewPage = () => {
     const {
@@ -10,6 +11,7 @@ const PreviewPage = () => {
         invoiceData
     } = useContext(AppContext);
     const previewRef = useRef();
+    const navigate = useNavigate();
     return (
         <div className="previewpage container-fluid d-flex flex-column p-3 min-vh-100">
             {/*Action buttons*/}
@@ -38,6 +40,12 @@ const PreviewPage = () => {
                 </div>
                 {/*list of action buttons*/}
                 <div className="d-flex flex-wrap justify-content-center gap-2">
+                    <button
+                        className="btn btn-dark"
+                        onClick={() => navigate(-1)}
+                    >
+                        Back
+                    </button>
                     <button className="btn btn-primary d-flex align-items-center justify-content-center">Save and Exit</button>
                     <button className="btn btn-danger">Delete Invoice</button>
                     <button className="btn btn-secondary">Back to Dashboard</button>

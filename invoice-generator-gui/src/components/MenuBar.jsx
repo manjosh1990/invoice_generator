@@ -7,7 +7,7 @@ const MenuBar = () => {
             <div className="container py2">
                 <Link className="navbar-brand d-flex align-items-center " to="/">
                     <Logo/>
-                    <span className="fw-bolder fs-4 mx-3 " style={{ letterSpacing: '-0.5px', color: '#800080' }}>QuickInvoice</span>
+                    <span className="fw-bolder fs-4 mx-3 " style={{ letterSpacing: '-0.5px', color: '#800080' }}>EasyInvoice</span>
                 </Link>
                 <button className="navbar-toggler"
                         type="button"
