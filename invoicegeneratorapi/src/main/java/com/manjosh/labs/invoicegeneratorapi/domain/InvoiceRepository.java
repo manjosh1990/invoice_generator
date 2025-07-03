@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InvoiceRepository extends MongoRepository<InvoiceEntity, String> {
-    // Custom query methods can be defined here if needed
+  // Custom query methods can be defined here if needed
 }

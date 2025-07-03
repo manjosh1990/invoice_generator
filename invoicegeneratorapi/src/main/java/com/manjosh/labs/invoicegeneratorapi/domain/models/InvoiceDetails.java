@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class InvoiceDetails {
-    private String invoiceNumber;
-    private String date;
-    private String dueDate;
+  private String invoiceNumber;
+  private String date;
+  private String dueDate;
 }
