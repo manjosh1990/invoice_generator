@@ -1,5 +1,6 @@
 package com.manjosh.labs.invoicegeneratorapi.domain.models;
 
+import java.time.Instant;
 import java.util.List;
 
 public record Invoice(
@@ -13,4 +14,6 @@ public record Invoice(
     Double tax,
     String thumbnailUrl,
     String template,
-    String title) {}
+    String title,
+    Instant createdAt,
+    Instant lastUpdatedAt) {}

@@ -48,7 +48,9 @@ public final class InvoiceMapper {
         entity.getTax(),
         entity.getThumbnailUrl(),
         entity.getTemplate(),
-        entity.getTitle());
+        entity.getTitle(),
+        entity.getCreatedAt(),
+        entity.getLastUpdatedAt());
   }
 
   public static List<Invoice> fromEntities(List<InvoiceEntity> invoiceEntities) {
