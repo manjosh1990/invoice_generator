@@ -36,8 +36,8 @@ export const formatInvoiceData = (invoiceData) => {
         shippingAddress: shipping.address || '',
         shippingPhone: shipping.phone || '',
 
-        accountName: account.name || '',
-        accountNumber: account.number || '',
+        accountName: account.accountName || '',
+        accountNumber: account.accountNumber || '',
         accountIfscCode: account.ifscCode || '',
 
         tax,

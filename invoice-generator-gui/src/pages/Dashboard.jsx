@@ -72,7 +72,7 @@ const Dashboard = () => {
                             <div className="card-body">
                                 <h6 className="card-title mb-1">{invoice.title}</h6>
                                 <small className="text-muted">
-                                    Last Updated: {formatDate(invoice.updatedAt)}
+                                    Last Updated: {formatDate(invoice.lastUpdatedAt)}
                                 </small>
                             </div>
                         </div>
