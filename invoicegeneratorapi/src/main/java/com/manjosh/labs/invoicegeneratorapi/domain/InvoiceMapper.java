@@ -17,8 +17,9 @@ public final class InvoiceMapper {
       return null;
     }
     return InvoiceEntity.builder()
-        .company(invoice.company())
+        .company(invoice.companyInfo())
         .billing(invoice.billing())
+        .account(invoice.account())
         .shipping(invoice.shipping())
         .invoice(invoice.invoice())
         .items(invoice.items())
@@ -38,9 +39,11 @@ public final class InvoiceMapper {
     }
 
     return new Invoice(
+        entity.getId(),
         entity.getCompany(),
         entity.getBilling(),
         entity.getShipping(),
+        entity.getAccount(),
         entity.getInvoice(),
         entity.getItems(),
         entity.getNotes(),

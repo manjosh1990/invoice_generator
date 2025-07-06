@@ -4,9 +4,11 @@ import java.time.Instant;
 import java.util.List;
 
 public record Invoice(
-    Company company,
+    String id,
+    Company companyInfo,
     Billing billing,
     Shipping shipping,
+    Account account,
     InvoiceDetails invoice,
     List<Item> items,
     String notes,
