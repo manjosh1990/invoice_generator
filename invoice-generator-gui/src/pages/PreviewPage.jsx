@@ -9,12 +9,14 @@ import {uploadInvoiceThumbnail} from "../service/cloudnariService.js";
 import {generatePDFFromElement} from "../utils/pdfUtils.js";
 import {Loader2} from "lucide-react";
 import InvoicePreview from "../components/InvoicePreview.jsx";
+import {AuthContext} from "react-oauth2-code-pkce";
 
 const PreviewPage = () => {
     // context
     const {
         selectedTemplate, setSelectedTemplate, invoiceData, baseUrl
     } = useContext(AppContext);
+    const {token} = useContext(AuthContext)
     // refs
     const previewRef = useRef();
     // navigate
@@ -40,7 +42,7 @@ const PreviewPage = () => {
                 ...invoiceData, thumbnailUrl, // Add the uploaded thumbnail URL
                 template: selectedTemplate,
             }
-            const response = await saveInvoice(baseUrl, payLoad);
+            const response = await saveInvoice(baseUrl, payLoad, token);
             if (response.status === 200) {
                 toast.success("Invoice saved successfully.");
                 navigate("/dashboard");
@@ -65,7 +67,7 @@ const PreviewPage = () => {
         }
 
         try {
-            const response = await deleteInvoice(baseUrl, invoiceData.id);
+            const response = await deleteInvoice(baseUrl, invoiceData.id,token);
             if (response.status === 204) {
                 toast.success("Invoice deleted successfully.");
                 navigate("/dashboard");

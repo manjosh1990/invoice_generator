@@ -14,30 +14,30 @@ import org.springframework.transaction.annotation.Transactional;
 public class InvoiceService {
   private final InvoiceRepository invoiceRepository;
 
-  public Invoice saveInvoice(Invoice invoice) {
+  public Invoice saveInvoice(Invoice invoice, String keycloakId) {
     final InvoiceEntity invoiceEntity = InvoiceMapper.toEntity(invoice);
     if (invoiceEntity == null) {
-      throw new IllegalArgumentException("Invoice cannot be null");
+      throw new ServiceException("Invoice cannot be null");
     }
+    invoiceEntity.setKeycloakId(keycloakId);
     final InvoiceEntity savedInvoice = invoiceRepository.save(invoiceEntity);
     return InvoiceMapper.fromEntity(savedInvoice);
   }
 
-  public List<Invoice> getAllInvoices() {
-    List<InvoiceEntity> invoiceEntities = invoiceRepository.findAll();
+  public List<Invoice> getAllInvoices(String keycloakId) {
+    List<InvoiceEntity> invoiceEntities = invoiceRepository.findByKeycloakId(keycloakId);
     return InvoiceMapper.fromEntities(invoiceEntities);
   }
 
-  public void removeInvoice(String id) {
+  public void removeInvoice(String id, String keycloakId) {
     if (id == null || id.isEmpty()) {
-      throw new IllegalArgumentException("Invoice ID cannot be null or empty");
+      throw new ServiceException("Invoice ID cannot be null or empty");
     }
 
     // Verify invoice exists before deletion
-    if (!invoiceRepository.existsById(id)) {
-      throw new ServiceException("Invoice not found with id: " + id);
-    }
-
+    invoiceRepository
+        .findByKeycloakIdAndId(keycloakId, id)
+        .orElseThrow(() -> new ServiceException("Invoice not found with id: " + id));
     try {
       invoiceRepository.deleteById(id);
     } catch (Exception e) {

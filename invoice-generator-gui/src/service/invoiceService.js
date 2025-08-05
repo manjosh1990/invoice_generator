@@ -1,12 +1,24 @@
 import axios from 'axios';
-export const saveInvoice = async (baseUrl,payLoad) => {
-    return axios.post(`${baseUrl}/invoices`,payLoad);
+export const saveInvoice = async (baseUrl,payLoad,token) => {
+    return axios.post(`${baseUrl}/invoices`,payLoad,{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
 }
 
-export const getInvoices = async (baseUrl) => {
-    return axios.get(`${baseUrl}/invoices`);
+export const getInvoices = async (baseUrl,token) => {
+    return axios.get(`${baseUrl}/invoices`,{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
 }
 
-export const deleteInvoice = async (baseUrl, invoiceId) => {
-    return axios.delete(`${baseUrl}/invoices/${invoiceId}`);
+export const deleteInvoice = async (baseUrl, invoiceId,token) => {
+    return axios.delete(`${baseUrl}/invoices/${invoiceId}`,{
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
 }

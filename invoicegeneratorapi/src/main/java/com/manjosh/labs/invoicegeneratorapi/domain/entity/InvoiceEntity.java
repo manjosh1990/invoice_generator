@@ -6,6 +6,8 @@ import com.manjosh.labs.invoicegeneratorapi.domain.models.Company;
 import com.manjosh.labs.invoicegeneratorapi.domain.models.InvoiceDetails;
 import com.manjosh.labs.invoicegeneratorapi.domain.models.Item;
 import com.manjosh.labs.invoicegeneratorapi.domain.models.Shipping;
+import java.time.Instant;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,9 +17,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,6 +24,7 @@ import java.util.List;
 @Document(collection = "invoices")
 public class InvoiceEntity {
   @Id private String id;
+  private String keycloakId;
   private Company company;
   private Billing billing;
   private Shipping shipping;

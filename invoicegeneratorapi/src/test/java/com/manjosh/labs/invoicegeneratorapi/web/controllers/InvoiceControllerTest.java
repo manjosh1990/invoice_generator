@@ -15,13 +15,19 @@ import com.manjosh.labs.invoicegeneratorapi.domain.models.InvoiceDetails;
 import com.manjosh.labs.invoicegeneratorapi.domain.models.Item;
 import com.manjosh.labs.invoicegeneratorapi.domain.models.Shipping;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 @AutoConfigureMockMvc
 class InvoiceControllerIntegrationTest extends AbstractBaseIntegrationTest {
@@ -84,19 +90,32 @@ class InvoiceControllerIntegrationTest extends AbstractBaseIntegrationTest {
             "Test Invoice",
             Instant.now(),
             null);
+    Jwt jwt =
+        Jwt.withTokenValue("mock-token")
+            .header("alg", "RS256")
+            .claim("sub", "test-user")
+            .issuer("http://localhost:8443/realms/oauth2-demo") // Match your Keycloak issuer URI
+            .build();
 
+    JwtAuthenticationToken authentication =
+        new JwtAuthenticationToken(jwt, Collections.emptyList());
     // when & then
-    mockMvc
-        .perform(
-            post("/api/invoices")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invoice)))
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("$.company.name").value("Test Company"))
-        .andExpect(jsonPath("$.billing.name").value("John Doe"))
-        .andExpect(jsonPath("$.shipping.name").value("Jane Doe"))
-        .andExpect(jsonPath("$.invoice.invoiceNumber").value("INV-001"))
-        .andExpect(jsonPath("$.items[0].description").value("Test Item"))
-        .andExpect(jsonPath("$.tax").value(10.0));
+    ResultActions result =
+        mockMvc
+            .perform(
+                post("/api/invoices")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(invoice))
+                    .with(SecurityMockMvcRequestPostProcessors.authentication(authentication)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.companyInfo.companyName").value("Test Company"))
+            .andExpect(jsonPath("$.billing.name").value("John Doe"))
+            .andExpect(jsonPath("$.shipping.name").value("Jane Doe"))
+            .andExpect(jsonPath("$.invoice.invoiceNumber").value("INV-001"))
+            .andExpect(jsonPath("$.items[0].description").value("Test Item"))
+            .andExpect(jsonPath("$.tax").value(10.0));
+    MockHttpServletResponse response = result.andReturn().getResponse();
+    String responseBody = response.getContentAsString();
+    System.out.println("Response Body: " + responseBody);
   }
 }

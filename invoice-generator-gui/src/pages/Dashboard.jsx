@@ -5,11 +5,13 @@ import toast from "react-hot-toast";
 import {Plus} from "lucide-react";
 import {formatDate} from "../utils/formatInvoiceData.js";
 import {useNavigate} from "react-router-dom";
+import {AuthContext} from "react-oauth2-code-pkce";
 
 
 const Dashboard = () => {
 
     const [invoices, setInvoices] = useState([]);
+    const {token} = useContext(AuthContext);
     const {
         baseUrl, setInvoiceData,
         setInvoiceTitle, setSelectedTemplate
@@ -20,7 +22,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchInvoices = async () => {
             try {
-                const response = await getInvoices(baseUrl);
+                const response = await getInvoices(baseUrl,token);
                 setInvoices(response.data);
             } catch (error) {
                 console.error("Error fetching invoices:", error);
